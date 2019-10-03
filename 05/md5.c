@@ -137,7 +137,7 @@ void md5(uint8_t *initial_msg, size_t initial_len) {
             uint32_t temp = d;
             d = c;
             c = b;
-            // printf("rotateLeft(%x + %x + %x + %x, %d)\n", a, f, k[i], w[g], r[i]);
+            //printf("rotateLeft(%x + %x + %x + %x, %d)\n", a, f, k[i], w[g], r[i]);
             b = b + LEFTROTATE((a + f + k[i] + w[g]), r[i]);
             a = temp;
 
@@ -157,60 +157,4 @@ void md5(uint8_t *initial_msg, size_t initial_len) {
     // cleanup
     free(msg);
  
-}
- 
-int main(int argc, char **argv) {
- 
-    if (argc < 2) {
-        printf("usage: %s 'string'\n", argv[0]);
-        return 1;
-    }
- 
-    char *msg = argv[1];
-    size_t len = strlen(msg);
- 
-    // benchmark
-    // int i;
-    // for (i = 0; i < 1000000; i++) {
-        md5(msg, len);
-    // }
- 
-    //var char digest[16] := h0 append h1 append h2 append h3 //(Output is in little-endian)
-    uint8_t *p;
- 
-    // display result
- 
-    p=(uint8_t *)&h0;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3]);
- 
-    p=(uint8_t *)&h1;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3]);
- 
-    p=(uint8_t *)&h2;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3]);
- 
-    p=(uint8_t *)&h3;
-    printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3]);
-    puts("");
- 
-    return 0;
-}
-
-void md5_(char *in, char *out) {
-    size_t len = strlen(in);
-    md5(in, len);
-
-    uint8_t *p0 = (uint8_t *)&h0;
-    uint8_t *p1 = (uint8_t *)&h1;
-    uint8_t *p2 = (uint8_t *)&h2;
-    uint8_t *p3 = (uint8_t *)&h3;
-
-    sprintf(
-        out,
-        "%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x",
-        p0[0], p0[1], p0[2], p0[3],
-        p1[0], p1[1], p1[2], p1[3],
-        p2[0], p2[1], p2[2], p2[3],
-        p3[0], p3[1], p3[2], p3[3]
-    );
 }
