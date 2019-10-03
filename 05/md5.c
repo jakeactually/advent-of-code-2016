@@ -1,3 +1,5 @@
+// https://gist.github.com/creationix/4710780
+
 /*
  * Simple MD5 implementation
  *
