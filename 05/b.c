@@ -1,38 +1,28 @@
-// https://gist.github.com/creationix/4710780
+// gcc b.c -o b -lcrypto && ./b
 
-#include "md5.c"
+#include <openssl/md5.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void md5_(char *in, char *out) {
-    size_t len = strlen(in);
-    md5(in, len);
-
-    uint8_t *p0 = (uint8_t *)&h0;
-    uint8_t *p1 = (uint8_t *)&h1;
-    uint8_t *p2 = (uint8_t *)&h2;
-    uint8_t *p3 = (uint8_t *)&h3;
-
-    sprintf(
-        out,
-        "%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x%2.2x",
-        p0[0], p0[1], p0[2], p0[3],
-        p1[0], p1[1], p1[2], p1[3],
-        p2[0], p2[1], p2[2], p2[3],
-        p3[0], p3[1], p3[2], p3[3]
-    );
-}
-
-int main(int argc, char **argv) {
-    int i, c;
-    
+int main()
+{
+    char prefix[9] = "uqwqemis";    
     char in[33];
+    unsigned char outb[16];
     char out[33];
-    char prefix[9] = "uqwqemis";
+    int i = 0;
+    int c = 0;
     char res[9] = "--------";
 
     for (;;) {
         sprintf(in, "%s%d", prefix, i);
-        md5_(in, out);
 
+        MD5(in, strlen(in), outb);
+
+        for (int j = 0; j < 16; j++)
+            sprintf(out + j * 2, "%02x", outb[j]);            
+        
         int valid =
             out[0] == '0' &&
             out[1] == '0' &&
@@ -60,4 +50,6 @@ int main(int argc, char **argv) {
 
         i++;
     }
+
+    printf("%s\n", res);
 }
