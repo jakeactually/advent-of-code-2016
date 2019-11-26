@@ -1,3 +1,5 @@
+// gcc -shared -o libhash.so -fPIC hash.c -lcrypto
+
 #include <openssl/md5.h>
 #include <stdio.h>
 #include <string.h>
