@@ -3,7 +3,6 @@
 #include <openssl/md5.h>
 #include <stdio.h>
 #include <string.h>
-#include <linux/crypto/md5.c>
 
 int main()
 {
