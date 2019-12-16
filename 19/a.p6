@@ -5,7 +5,7 @@ while @elves.elems > 1 {
   my @collected;
 
   for @elves {
-    if $flag mod 2 == 1 {      
+    if $flag mod 2 == 0 {      
       @collected.push: $_;
     }
 
