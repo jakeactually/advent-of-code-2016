@@ -1,5 +1,5 @@
 use NativeCall;
-sub hash(CArray[uint8], CArray[uint8]) is native('./libhash.so') { * }
+sub hash(CArray[uint8], uint32, CArray[uint8]) is native('./libhash.so.0.0.0') { * }
 
 use experimental :pack;
 
@@ -27,6 +27,6 @@ for 0..* {
 sub hashw(Str $str --> Str) {
     my $in = CArray[uint8].new($str.encode.list);    
     my $out = CArray[uint8].new(0 xx 16);
-    hash($in, $out);
+    hash($in, $str.chars, $out);
     Blob.new($out).unpack("H*")
 }
